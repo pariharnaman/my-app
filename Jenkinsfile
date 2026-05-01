@@ -11,7 +11,7 @@ pipeline {
 
         stage('Clone Source') {
             steps {
-                git 'https://github.com/pariharnaman/my-app.git'
+                git branch: 'main', url: 'https://github.com/pariharnaman/my-app.git'
             }
         }
 
