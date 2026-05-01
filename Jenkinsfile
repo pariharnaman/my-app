@@ -2,14 +2,12 @@ pipeline {
     agent any
 
     environment {
-        DOCKERHUB_USER = "pariharnaman"
+        DOCKERHUB_USER = "nemon28"
         IMAGE_NAME = "${DOCKERHUB_USER}/my-app"
         TAG = "${BUILD_NUMBER}"
     }
 
     stages {
-
-       
 
         stage('Build Docker Image') {
             steps {
@@ -23,15 +21,15 @@ pipeline {
             }
         }
 
-    stage('Login to Docker Hub') {
-    steps {
-        withCredentials([string(credentialsId: 'dockerhub-token', variable: 'DOCKER_TOKEN')]) {
-            sh '''
-            echo "$DOCKER_TOKEN" | docker login -u "pariharnaman" --password-stdin
-            '''
+        stage('Login to Docker Hub') {
+            steps {
+                withCredentials([string(credentialsId: 'dockerhub-token', variable: 'DOCKER_TOKEN')]) {
+                    sh '''
+                    echo "$DOCKER_TOKEN" | docker login -u "$DOCKERHUB_USER" --password-stdin
+                    '''
+                }
+            }
         }
-    }
-}
 
         stage('Push to Docker Hub') {
             steps {
